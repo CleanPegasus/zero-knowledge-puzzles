@@ -38,8 +38,6 @@ template IntSqrt(n) {
 
     lt.out * gt.out === 1;
 
-
-
 }
 
 component main = IntSqrt(252);

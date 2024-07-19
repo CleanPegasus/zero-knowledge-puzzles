@@ -26,6 +26,13 @@ template IntDivOut(n) {
     lt.in[1] <== remainder;
     lt.out === 0;
 
+    component lte = LessEqThan(n);
+    lte.in[0] <== out * denominator;
+    lte.in[1] <== out;
+
+    component lte_2 = LessEqThan(n);
+    lte_2.in[0] <== out * denominator;
+    lte_2.in[1] <== denominator;
 
 
 }

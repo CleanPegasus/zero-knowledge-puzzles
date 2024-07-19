@@ -16,6 +16,13 @@ template IntDiv(n) {
     signal input quotient;
     signal input remainder;
 
+    // constrains
+    // nq + r === d
+    // d > 0
+    // r < d
+    // nq >= n
+    // nq >= q
+
     // denominator > 0
     component isZero = IsZero();
     isZero.in <== denominator;
@@ -29,22 +36,15 @@ template IntDiv(n) {
     lt.out === 0;
 
     signal a <== quotient * denominator + remainder;
-    log(a);
-    component num2bits = Num2Bits(2 * n);
-    num2bits.in <== a;
 
-    signal temp[n];
+    component lte = LessEqThan(n);
+    lte.in[0] <== quotient * denominator;
+    lte.in[1] <== quotient;
 
-    for(var i; i<n; i++) {
-        temp[i] <== num2bits.out[i];
-    }
+    component lte_2 = LessEqThan(n);
+    lte_2.in[0] <== quotient * denominator;
+    lte_2.in[1] <== denominator;
 
-    component bits2num = Bits2Num(n);
-    for(var i; i<n; i++) {
-        bits2num.in[i] <== temp[i];
-    }
-
-    numerator === bits2num.out;
 
 }
 
