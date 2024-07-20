@@ -19,30 +19,17 @@ describe("integer square root validation", function() {
     let circuit;
 
     before(async () => {
-        circuit = await wasm_tester(path.join(__dirname, "../IntSqrt/", "IntSqrt.circom"));
+        circuit = await wasm_tester(path.join(__dirname, "../QuinSelector/", "QuinSelector.circom"));
         await circuit.loadConstraints();
     });
 
-    it("Should accept [2, 4]", async () => {
+    it("Should return 5n", async () => {
 
-        
+      const witness = await circuit.calculateWitness({
+            "in": [3, 4, 5, 6, 7, 8],
+            "selector": 2
+      })
 
-        await expect(circuit.calculateWitness({
-            "in": [2, 4]
-        }, true)).to.not.eventually.be.rejected;
-    });
-
-    it("Should accept [2, 5]", async () => {
-
-        await expect(circuit.calculateWitness({
-            "in": [2, 5]
-        }, true)).to.not.eventually.be.rejected;
-    });
-
-    it("Should reject [2, 9]", async () => {
-
-        await expect(circuit.calculateWitness({
-            "in": [2, 9]
-        }, true)).to.eventually.be.rejected;
+      expect(witness[1]).to.be.eq(5n);
     });
 });
