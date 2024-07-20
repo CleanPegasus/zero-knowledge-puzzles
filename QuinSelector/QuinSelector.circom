@@ -50,8 +50,4 @@ template QuinSelector(n) {
   out <== scalar_product.out;
 }
 
-component main = QuinSelector(6);
-
-
-
-
+// component main = QuinSelector(6);
